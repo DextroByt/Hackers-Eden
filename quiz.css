@@ -1,25 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-html {
-    scroll-behavior: smooth;
-}
-
 body {
-    margin: 0;
-    padding: 0;
     background-color: black;
     color: green;
     font-family: 'Courier New', Courier, monospace;
-    line-height: 1;
-    letter-spacing: 0.5px;
+    margin: 0;
+    padding: 0;
 }
 
-/* Header Styling */
 .header {
     background-color: black;
     padding: 20px;
     text-align: center;
-    
     font-size: 36px;
     font-weight: bold;
     color: green;
@@ -29,13 +19,14 @@ body {
 }
 
 .header:hover {
-    color: #ff3333; /* A softer red */
+    color: #ff3333;
+    /* A softer red */
     border-bottom-color: #ff3333;
     box-shadow: 0 5px 15px rgba(255, 51, 51, 0.4);
     position: relative;
 }
 
-.hamburger {
+.arrow-icon {
     position: absolute;
     top: 50%;
     left: 20px; /* Adjust left as needed */
@@ -44,113 +35,176 @@ body {
     z-index: 100;
 }
 
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 30%;
-    height: 100%;
-    background-color: black;
-    color: #008000;
-    padding-top: 50px;
-    transition: left 0.5s ease-in-out;
-    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
-    z-index: 99;
-}
-
-.sidebar.open {
-    left: 0;
-}
-
-.sidebar .close-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: red;
-    font-size: 40px;
-    cursor: pointer;
-    z-index: 101;
-}
-
-.sidebar ul {
-    list-style-type: none;
-    padding-left: 0;
-    margin-left: 20px;
-}
-
-
-.sidebar ul li {
-    font-size: 18px;
-    margin: 20px 0;
-}
-
-.sidebar ul li a {
-    text-decoration: none;
-    color: #00FF00;
-}
-
-.sidebar ul li a:hover {
-    color: #FF0000;
-}
-
-/* Section Styling */
-.section {
-    padding: 20px;
-    margin: 20px 0;
+.quiz-container {
+    margin: 30px;
     border: 2px dashed green;
+    margin: 20px 5px 10px 5px;
+    padding: 10px;
 }
 
-.section h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
+.question {
+    font-size: 24px;
+    /* Increased size for questions */
+    font-weight: bold;
+    /* Make the question bold */
+    color: yellowgreen;
+    /* Different color for questions */
+    margin: 20px 0;
 }
 
-.tools-list,
-.coding-languages {
+.options {
+    list-style-type: none;
+    padding: 0;
+}
+
+.options li {
+    font-size: 20px;
+    /* Slightly smaller font size for options */
+    font-weight: normal;
+    /* Regular font weight for options */
+    color: lightgreen;
+    /* Different color for options */
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid green;
+    /* Add a border around each option */
+    border-radius: 5px;
+    /* Rounded corners for options */
+    background-color: black;
+    /* Background color to contrast with text */
+    transition: all 0.3s ease;
+    /* Smooth transition effect */
+    cursor: pointer;
+}
+
+.options li:hover {
+    background-color: black;
+    /* Highlight background on hover */
+    color: red;
+    /* Change text color on hover */
+    transform: scale(1.05);
+    /* Slight zoom effect on hover */
+    border-color: red;
+}
+
+.options li.selected {
+    font-weight: bold;
+    /* Make selected option bold */
+    color: red;
+    /* Change text color for selected option */
+    background-color: black;
+    /* Highlight background for selected option */
+    border-color: red;
+    /* Change border color for selected option */
+}
+
+
+.options li.selected.changed {
+    color: green;
+    /* Add a 'changed' class for options that will be colored green */
+}
+
+.timer {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.submit-btn,
+.play-again-btn {
+    display: block;
+    margin: 30px auto;
+    padding: 15px;
+    background-color: black;
+    color: red;
+    font-size: 20px;
+    border: 2px solid red;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.popup .close {
+    cursor: pointer;
+    text-align: right;
+    font-size: 30px;
+    color: red;
+    /* Red color for the close button */
+    background: none;
+    /* Remove any background */
+    border: none;
+    /* Remove border */
+    padding: 0;
+    margin: 0;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    color: green;
+    padding: 20px;
+    z-index: 1000;
+    width: 400px;
+    /* Width remains as is */
+    max-height: 80vh;
+    /* Limits the height to 80% of the viewport height */
+    overflow-y: auto;
+    /* Makes content scrollable if it exceeds max-height */
+    border: 2px solid green;
+    /* Adds a border to match the theme */
+    border-radius: 10px;
+    /* Rounded corners */
+}
+
+/* Custom scrollbar styles */
+.popup::-webkit-scrollbar {
+    width: 8px;
+}
+
+.popup::-webkit-scrollbar-track {
+    background: black;
+}
+
+.popup::-webkit-scrollbar-thumb {
+    background-color: green;
+    border-radius: 10px;
+    border: 2px solid green;
+}
+
+.popup ul {
     list-style-type: none;
     padding-left: 0;
+    margin-bottom: 0;
 }
 
-.tools-list li,
-.coding-languages li {
-    font-size: 18px;
+.popup ul li {
     margin: 10px 0;
 }
 
-.tools-list li a,
-.coding-languages li a {
-    text-decoration: none;
-    color: #00FF00;
-}
-
-.tools-list li a:hover,
-.coding-languages li a:hover {
-    color: #FF0000;
-}
-
-.game-btn {
-    display: block;
-    width: 200px;
-    padding: 15px;
-    margin: 20px auto;
-    font-size: 18px;
-    text-align: center;
+.popup ul li.correct {
     color: green;
-    background-color: black;
-    border: 2px dashed green;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, transform 0.2s;
 }
 
-.game-btn:hover {
-    background-color: black;
+.popup ul li.wrong {
     color: red;
-    border: 2px dashed red;
 }
 
-.game-btn:active {
-    transform: scale(0.98);
+.popup ul li.explanation {
+    font-style: italic;
+    font-size: 14px;
+    margin-top: 5px;
 }
+
+.popup ul li:not(:last-child) {
+    border-bottom: 1px solid green;
+    /* Adds a line after each question */
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
 
 /* Footer Styling */
 .footer {
@@ -182,18 +236,9 @@ body {
     font-size: 14px;
 }
 
-#back-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: black;
-    color: green;
-    padding: 10px;
-    border-radius: 50%;
-    border: 2px dotted green;
-    cursor: pointer;
-    display: none;
-}
+/* ---------------------------
+Home Page Media Queries Added to Game File
+--------------------------- */
 
 /* Media Query for 1080px screens */
 @media (max-width: 1080px) {
@@ -201,25 +246,15 @@ body {
         font-size: 28px;
     }
 
-    .hamburger {
+    .arrow-icon {
         left: 15px;
     }
 
-    .sidebar {
-        width: 40%;
-    }
-
-    .section {
+    .quiz-container {
         padding: 15px;
     }
 
-    .tools-list li,
-    .coding-languages li {
-        font-size: 16px;
-    }
-
-    .game-btn {
-        width: 180px;
+    .options li {
         font-size: 16px;
     }
 
@@ -234,25 +269,15 @@ body {
         font-size: 24px;
     }
 
-    .hamburger {
+    .arrow-icon {
         left: 10px;
     }
 
-    .sidebar {
-        width: 50%;
-    }
-
-    .section {
+    .quiz-container {
         padding: 10px;
     }
 
-    .tools-list li,
-    .coding-languages li {
-        font-size: 14px;
-    }
-
-    .game-btn {
-        width: 150px;
+    .options li {
         font-size: 14px;
     }
 
@@ -267,25 +292,15 @@ body {
         font-size: 20px;
     }
 
-    .hamburger {
+    .arrow-icon {
         left: 5px;
     }
 
-    .sidebar {
-        width: 60%;
-    }
-
-    .section {
+    .quiz-container {
         padding: 8px;
     }
 
-    .tools-list li,
-    .coding-languages li {
-        font-size: 12px;
-    }
-
-    .game-btn {
-        width: 120px;
+    .options li {
         font-size: 12px;
     }
 
