@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home.css">
+    <title>Hackers Eden - Home</title>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        Hackers Eden
+        <div class="hamburger" onclick="toggleSidebar()">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAd0lEQVR4nO2UQQqAMAwE5+SfrO/T6j+r34gUKhRv0SqCO5BjNksSFoT4IgadwWKwGdjNWg1i1vQYmBsMPtfkMbCWpv7iEmutcGziioHQwMBQtJKnKT5wgtH7hLHaxJ1KebjrCYUpB1AOoBz4OaYcQDmAckAI3mIH1TgzJqlCQmUAAAAASUVORK5CYII="
+                alt="menu--v5">
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <span class="close-btn" onclick="toggleSidebar()"><img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA3ElEQVR4nO2VzQ6CMBCEhzdQPGuF938OIV68VqOQPskYYk0I9mdL1WjCJj0xy5cZ6C6w1F8WgTWBlsCFgBLoldUOPaUUsiJwJEB7DIE6oN8RuI30JwIbCagZNT1P53LGh5POoW9ikILA2dH4AqMfQvuOIgabRsFJjJVA443aFUkfcNZ5ng09exFE6IxZTjJgZoh0FiQBZrIhCaD60xB+8/twdoSRy9hHfn31DifSC1vljKA+YQRpyQhqYxABLDxUA2vCGwWBLYFr8pqwzaVdFzph8WkCB/HiW+rn6g4gK68SE+Oh1QAAAABJRU5ErkJggg=="
+                alt="delete-sign"></span> <!-- Close icon -->
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="#">Tools</a></li>
+            <li><a href="#">Resources</a></li>
+            <li><a href="#">Coding Languages</a></li>
+            <li><a href="quiz.html">Byte Busters Quiz</a></li>
+        </ul>
+
+    </div>
+
+    <!-- About Section -->
+    <div class="section">
+        <h2>Welcome to Hackers Eden</h2>
+        <p>Explore the ultimate destination for cybersecurity and ethical hacking. Hackers Eden equips you with the
+            essential tools, knowledge, skills, and resources to enhance your expertise and grow in the digital world
+            responsibly.</p>
+    </div>
+
+    <!-- Tools Section -->
+    <div class="section">
+        <h2>Essential Tools</h2>
+        <p>Equip yourself with the best tools used by ethical hackers and cybersecurity professionals.</p>
+        <ul class="tools-list">
+            <li><a href="Tools/nmap.html">Nmap - Network Scanning</a></li>
+            <li><a href="Tools/burpsuite.html">Burp Suite - Web Application Security</a></li>
+            <li><a href="Tools/wireshark.html">Wireshark - Packet Analysis</a></li>
+            <li><a href="Tools/metasploit.html">Metasploit - Penetration Testing</a></li>
+            <li><a href="#">More Coming Soon.....</a></li>
+            <!-- <li><a href="Tools/aircrack-ng.html">Aircrack-ng - Wireless Security</a></li>
+        <li><a href="Tools/johntheripper.html">John the Ripper - Password Cracking</a></li> -->
+        </ul>
+    </div>
+
+    <!-- Programming Languages Section -->
+    <div class="section">
+        <h2>Programming Essentials</h2>
+        <p>Master the art of coding to become a proficient ethical hacker. Start with these popular languages:</p>
+        <ul class="coding-languages">
+            <li><a href="#">Python</a></li>
+            <li><a href="#">C</a></li>
+            <li><a href="#">JavaScript</a></li>
+            <li><a href="#">More coming Soon.....</a></li>
+            <!-- <li><a href="#">C++</a></li>
+        <li><a href="#">Go</a></li>
+        <li><a href="#">Ruby</a></li> -->
+        </ul>
+    </div>
+
+    <!-- Resources Section -->
+    <div class="section">
+        <h2>Learning Resources</h2>
+        <p>Explore curated guides, tutorials, and documentation to strengthen your foundation in cybersecurity.</p>
+        <p>Stay tuned for exclusive content and updates.</p>
+    </div>
+
+    <!-- Cyber Quest Game Section -->
+    <div class="section">
+        <h2>Byte Busters Quiz</h2>
+        <p>Test your knowledge with a challenging cybersecurity quiz. Prove your skills and beat the clock!</p>
+        <p><strong>Game Rules:</strong></p>
+        <ul>
+            <li>You have 2 minutes to complete the quiz.</li>
+            <li>The quiz consists of 5 random cybersecurity-related questions.</li>
+            <li>Each question has four options, with only one correct answer.</li>
+            <li>The game resets when you click the submit button and close the results.</li>
+        </ul>
+        <button class="game-btn" onclick="window.location.href='quiz.html'">Start Quiz</button>
+    </div>
+
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2024 Hackers Eden. All Rights Reserved.</p>
+        <p>For educational purposes only. Unauthorized access is illegal.</p>
+        <p><a href="#">Contact Us</a> | <a href="#">Privacy Policy</a></p>
+        <p>Developed by DextroByt</p> <!-- Developer Name in Footer -->
+        <p>Icons by <a href="https://icons8.com" target="_blank">Icons8</a>.</p>
+    </div>
+
+
+    <div id="back-to-top" onclick="scrollToTop()">↑</div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const hamburger = document.querySelector('.hamburger');
+            sidebar.classList.toggle('open');
+            hamburger.style.display = sidebar.classList.contains('open') ? 'none' : 'block'; // Hide hamburger when sidebar is open
+        }
+
+        // Close the sidebar if clicked outside
+        document.addEventListener('click', function (event) {
+            const sidebar = document.querySelector('.sidebar');
+            const hamburger = document.querySelector('.hamburger');
+            if (!sidebar.contains(event.target) && !hamburger.contains(event.target)) {
+                sidebar.classList.remove('open');
+                hamburger.style.display = 'block';
+            }
+        });
+
+        // Back-to-Top Button
+        window.onscroll = function () {
+            document.getElementById('back-to-top').style.display = window.scrollY > 200 ? 'block' : 'none';
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+    </script>
+</body>
+
+</html>

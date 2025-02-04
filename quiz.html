@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+    <style>
+        body {
+            background-color: black;
+            color: green;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: black;
+            color: green;
+            padding: 20px;
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            border-bottom: 2px solid green;
+            box-shadow: 0 5px 15px green;
+        }
+
+        .header:hover {
+            color: red;
+            border-bottom: 2px solid red;
+            box-shadow: 0 5px 15px red;
+        }
+
+        .arrow-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: green;
+            cursor: pointer;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .arrow-icon:hover {
+            color: red;
+        }
+
+        .quiz-container {
+            margin: 30px;
+            border: 2px dashed green;
+            margin: 20px 5px 10px 5px;
+            padding: 10px;
+        }
+
+        .question {
+            font-size: 24px;
+            /* Increased size for questions */
+            font-weight: bold;
+            /* Make the question bold */
+            color: yellowgreen;
+            /* Different color for questions */
+            margin: 20px 0;
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .options li {
+            font-size: 20px;
+            /* Slightly smaller font size for options */
+            font-weight: normal;
+            /* Regular font weight for options */
+            color: lightgreen;
+            /* Different color for options */
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid green;
+            /* Add a border around each option */
+            border-radius: 5px;
+            /* Rounded corners for options */
+            background-color: black;
+            /* Background color to contrast with text */
+            transition: all 0.3s ease;
+            /* Smooth transition effect */
+            cursor: pointer;
+        }
+
+        .options li:hover {
+            background-color: black;
+            /* Highlight background on hover */
+            color: red;
+            /* Change text color on hover */
+            transform: scale(1.05);
+            /* Slight zoom effect on hover */
+            border-color: red;
+        }
+
+        .options li.selected {
+            font-weight: bold;
+            /* Make selected option bold */
+            color: red;
+            /* Change text color for selected option */
+            background-color: black;
+            /* Highlight background for selected option */
+            border-color: red;
+            /* Change border color for selected option */
+        }
+
+
+        .options li.selected.changed {
+            color: green;
+            /* Add a 'changed' class for options that will be colored green */
+        }
+
+        .timer {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .submit-btn,
+        .play-again-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 15px;
+            background-color: black;
+            color: red;
+            font-size: 20px;
+            border: 2px solid red;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .popup .close {
+            cursor: pointer;
+            text-align: right;
+            font-size: 30px;
+            color: red;
+            /* Red color for the close button */
+            background: none;
+            /* Remove any background */
+            border: none;
+            /* Remove border */
+            padding: 0;
+            margin: 0;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: black;
+            color: green;
+            padding: 20px;
+            z-index: 1000;
+            width: 400px;
+            /* Width remains as is */
+            max-height: 80vh;
+            /* Limits the height to 80% of the viewport height */
+            overflow-y: auto;
+            /* Makes content scrollable if it exceeds max-height */
+            border: 2px solid green;
+            /* Adds a border to match the theme */
+            border-radius: 10px;
+            /* Rounded corners */
+        }
+
+        /* Custom scrollbar styles */
+        .popup::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .popup::-webkit-scrollbar-track {
+            background: black;
+        }
+
+        .popup::-webkit-scrollbar-thumb {
+            background-color: green;
+            border-radius: 10px;
+            border: 2px solid green;
+        }
+
+        .popup ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        .popup ul li {
+            margin: 10px 0;
+        }
+
+        .popup ul li.correct {
+            color: green;
+        }
+
+        .popup ul li.wrong {
+            color: red;
+        }
+
+        .popup ul li.explanation {
+            font-style: italic;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .popup ul li:not(:last-child) {
+            border-bottom: 1px solid green;
+            /* Adds a line after each question */
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+
+        /* Footer Styling */
+        .footer {
+            border-top: 2px solid green;
+            box-shadow: 0 -5px 15px rgba(0, 255, 0, 0.3);
+            background-color: black;
+            color: green;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .footer a {
+            color: #00FF00;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #FF0000;
+        }
+
+        /* Developed By Section */
+        .developed-by {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Music -->
+    <audio id="background-music" autoplay loop>
+        <source src="background-music.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Arrow Icon for Home Page Redirection -->
+    <a href="home.html" class="arrow-icon">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2WQQoCMRAE6yCyH/BVvsE3+IhVfJ5/8bIXoUTIYa/G7M4E0pDjpAua9ASGepGwCDY4U/cAU8Q8A0B4RUdwLpfEAKwgjuwNIFyFU43x3wDCoww+hcOuAMKtDL2FS615FYANzX8GEO6t67YvgK+EOSyCLSD6fIYpiihFFadYRiZYx8sAMEkERn/LDQEYYiN9ANGro+49+OFFAAAAAElFTkSuQmCC"
+            alt="exit">
+    </a>
+
+    <div class="header">
+        Byte Busters Quiz
+    </div>
+
+    <div class="quiz-container" id="quiz-container">
+        <!-- Questions will be dynamically inserted here -->
+    </div>
+
+    <div class="timer" id="timer">Time Remaining: 02:00</div>
+    <button class="submit-btn" onclick="submitQuiz()">Submit</button>
+    <button class="play-again-btn" onclick="resetGame()" style="display: none;">Play Again</button>
+
+    <!-- Popup to show results -->
+    <div class="popup" id="popup">
+        <span class="close" onclick="closePopup()">×</span>
+        <h3>Results</h3>
+        <ul id="result-list"></ul>
+    </div>
+
+    <!--Footer-->>
+    <div class="footer">
+        <p>© 2024 Hackers Eden. All Rights Reserved.</p>
+        <p>For educational purposes only. Unauthorized access is illegal.</p>
+        <p><a href="#">Contact Us</a> | <a href="#">Privacy Policy</a></p>
+        <p>Developed by DextroByt</p> <!-- Developer Name in Footer -->
+        <p>Background music "8-Bit Adventure" by Kevin MacLeod, licensed under <a
+                href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0
+                International License</a>. Music available at <a href="https://incompetech.com"
+                target="_blank">Incompetech</a>.</p>
+        <p>Icons by <a href="https://icons8.com" target="_blank">Icons8</a>.</p>
+    </div>
+
+
+    <script>
+        let selectedAnswers = {};
+        let timer = 120; // 2 minutes
+        let interval;
+        let selectedQuestions = []; // Store the selected questions globally
+
+        const questions = [
+            { id: 1, question: 'What is phishing?', options: ['A) A type of firewall attack', 'B) A method to encrypt data', 'C) A social engineering attack', 'D) A network vulnerability scanner'], correctAnswer: 'C', explanation: 'Phishing is a social engineering attack used to trick users into revealing sensitive information.' },
+            { id: 2, question: 'What does VPN stand for?', options: ['A) Virtual Private Network', 'B) Variable Protocol Network', 'C) Virtual Protected Network', 'D) Voice Private Network'], correctAnswer: 'A', explanation: 'VPN stands for Virtual Private Network, which allows users to securely connect to a network over the internet.' },
+            { id: 3, question: 'What is the purpose of a firewall?', options: ['A) To monitor network traffic', 'B) To store user data', 'C) To encrypt communications', 'D) To prevent unauthorized access to a network'], correctAnswer: 'D', explanation: 'The purpose of a firewall is to prevent unauthorized access to a network by monitoring and controlling incoming and outgoing traffic.' },
+            { id: 4, question: 'What does the term "DDoS" stand for?', options: ['A) Direct Denial of Service', 'B) Distributed Denial of Service', 'C) Distributed Data Overload System', 'D) Direct Data Overload System'], correctAnswer: 'B', explanation: 'DDoS stands for Distributed Denial of Service, a type of cyberattack that overloads a system with traffic from multiple sources.' },
+            { id: 5, question: 'What is a brute force attack?', options: ['A) An attack using social engineering', 'B) An attack that cracks passwords by trying every combination', 'C) An attack on physical security systems', 'D) An attack using malware to encrypt data'], correctAnswer: 'B', explanation: 'A brute force attack involves trying every possible combination to crack passwords or encryption keys.' },
+            { id: 6, question: 'What is encryption?', options: ['A) The process of hiding data', 'B) The process of encoding data to make it unreadable', 'C) The process of deleting data securely', 'D) The process of storing data in a database'], correctAnswer: 'B', explanation: 'Encryption is the process of encoding data to make it unreadable without a decryption key.' },
+            { id: 7, question: 'What does "HTTPS" stand for?', options: ['A) Hyper Text Transfer Protocol Secure', 'B) Hyper Text Transfer Protocol Standard', 'C) Hyper Transfer Text Protocol Secure', 'D) Hyper Text Transfer Protocol Simple'], correctAnswer: 'A', explanation: 'HTTPS stands for Hyper Text Transfer Protocol Secure, which ensures encrypted communication between a user and a website.' },
+            { id: 8, question: 'What is malware?', options: ['A) A type of computer virus', 'B) Software designed to harm or exploit a system', 'C) A method of encrypting data', 'D) A tool for password recovery'], correctAnswer: 'B', explanation: 'Malware refers to software designed to harm or exploit a system, such as viruses, worms, or trojans.' },
+            { id: 9, question: 'Which one of these is a strong password?', options: ['A) password123', 'B) 12345678', 'C) abc@1234', 'D) xYz$84pQ'], correctAnswer: 'D', explanation: 'A strong password typically includes a mix of uppercase and lowercase letters, numbers, and special characters, like xYz$84pQ.' },
+            { id: 10, question: 'What is the purpose of two-factor authentication?', options: ['A) To provide an extra layer of security for user logins', 'B) To speed up login processes', 'C) To protect against phishing attacks', 'D) To reduce password complexity'], correctAnswer: 'A', explanation: 'Two-factor authentication adds an extra layer of security by requiring two forms of verification before granting access to an account.' },
+            { id: 11, question: 'What is social engineering?', options: ['A) A method to exploit a network vulnerability', 'B) A technique used to manipulate individuals into revealing confidential information', 'C) A type of malware', 'D) A process of encrypting data'], correctAnswer: 'B', explanation: 'Social engineering involves manipulating individuals to disclose confidential information, often through deception or impersonation.' },
+            { id: 12, question: 'Which of these is a type of phishing attack?', options: ['A) Spear phishing', 'B) SQL injection', 'C) Brute force attack', 'D) Cross-site scripting'], correctAnswer: 'A', explanation: 'Spear phishing is a targeted phishing attack where the attacker customizes the attack for a specific individual or organization.' },
+            { id: 13, question: 'What is a zero-day exploit?', options: ['A) A vulnerability discovered and fixed by the software vendor on the same day', 'B) An attack targeting a newly discovered vulnerability before a patch is available', 'C) A method of encrypting communication', 'D) A type of social engineering attack'], correctAnswer: 'B', explanation: 'A zero-day exploit targets vulnerabilities in software that are not yet known to the software vendor or public, before a fix can be applied.' },
+            { id: 14, question: 'What is the purpose of a penetration test?', options: ['A) To identify vulnerabilities in a system by simulating an attack', 'B) To recover lost passwords', 'C) To encrypt sensitive data', 'D) To monitor network traffic'], correctAnswer: 'A', explanation: 'Penetration testing involves simulating a cyberattack on a system to identify and fix vulnerabilities before they can be exploited.' },
+            { id: 15, question: 'What does the term "ransomware" refer to?', options: ['A) Malware that infects and takes control of a system', 'B) A type of phishing attack', 'C) Malware that locks or encrypts data and demands payment for its release', 'D) A method to recover encrypted data'], correctAnswer: 'C', explanation: 'Ransomware is a type of malware that locks or encrypts a victim’s data, demanding payment for the decryption key.' },
+            { id: 16, question: 'What is two-factor authentication?', options: ['A) A system that requires two passwords to access an account', 'B) A system that uses two different methods to verify identity', 'C) A method of encrypting passwords', 'D) A tool for password recovery'], correctAnswer: 'B', explanation: 'Two-factor authentication (2FA) adds an extra layer of security by requiring two different methods, such as a password and a verification code sent to your phone.' },
+            { id: 17, question: 'What is SQL injection?', options: ['A) A form of social engineering attack', 'B) A method to inject malicious code into a database query', 'C) A technique used to steal encryption keys', 'D) A type of brute force attack'], correctAnswer: 'B', explanation: 'SQL injection is a technique where attackers insert malicious SQL code into input fields to exploit vulnerabilities in a web application’s database.' },
+            { id: 18, question: 'What is the function of antivirus software?', options: ['A) To recover lost files', 'B) To protect a system from malware and viruses', 'C) To encrypt communication over the internet', 'D) To create backups of system data'], correctAnswer: 'B', explanation: 'Antivirus software detects, prevents, and removes malware and viruses from a system to protect it from potential harm.' },
+            { id: 19, question: 'What is a botnet?', options: ['A) A type of computer virus', 'B) A network of infected devices used for malicious purposes', 'C) A type of encryption method', 'D) A secure method of transmitting data'], correctAnswer: 'B', explanation: 'A botnet is a network of infected devices controlled remotely by a cybercriminal, often used for DDoS attacks, spamming, or other malicious activities.' },
+            { id: 20, question: 'What is a Trojan horse?', options: ['A) A type of network vulnerability scanner', 'B) A malicious program disguised as a legitimate file or software', 'C) A type of social engineering attack', 'D) A system used to monitor network traffic'], correctAnswer: 'B', explanation: 'A Trojan horse is a type of malware that pretends to be a legitimate program, but once executed, it can harm the system or steal information.' },
+            { id: 21, question: 'What was the WannaCry ransomware attack?', options: ['A) A malware that stole user credentials', 'B) A ransomware that targeted unpatched Windows systems worldwide', 'C) A phishing attack on a major bank', 'D) A type of botnet attack'], correctAnswer: 'B', explanation: 'WannaCry was a ransomware attack that affected hundreds of thousands of computers globally in 2017 by exploiting a vulnerability in unpatched Windows systems.' },
+            { id: 22, question: 'What is the role of a Certificate Authority (CA) in HTTPS?', options: ['A) It encrypts data between client and server', 'B) It issues digital certificates to verify website authenticity', 'C) It stores encryption keys', 'D) It monitors network traffic for suspicious activity'], correctAnswer: 'B', explanation: 'A Certificate Authority (CA) issues digital certificates that help verify the authenticity of a website to ensure secure communication using HTTPS.' },
+            { id: 23, question: 'What was the Equifax data breach?', options: ['A) A breach that exposed millions of people’s personal and financial information', 'B) A hack of an online shopping website', 'C) A DDoS attack on a financial institution', 'D) A breach of a social media platform’s user data'], correctAnswer: 'A', explanation: 'In 2017, Equifax, a credit reporting agency, suffered a data breach that exposed the personal information of 147 million people due to a vulnerability in their web application.' },
+            { id: 24, question: 'What is a man-in-the-middle (MITM) attack?', options: ['A) An attack where the attacker intercepts and manipulates communication between two parties', 'B) An attack on a physical security system', 'C) A phishing scam', 'D) A type of malware that encrypts files'], correctAnswer: 'A', explanation: 'A man-in-the-middle (MITM) attack occurs when an attacker intercepts and potentially alters communication between two parties, often to steal sensitive information.' },
+            { id: 25, question: 'What is the significance of the 2013 Target data breach?', options: ['A) A breach involving ransomware', 'B) A breach that exposed credit card information of over 40 million customers', 'C) A breach where employees were targeted with phishing emails', 'D) A vulnerability exploited in the company’s mobile app'], correctAnswer: 'B', explanation: 'In 2013, Target suffered a data breach in which hackers gained access to the credit card information of over 40 million customers, due to an insecure third-party vendor.' },
+            { id: 26, question: 'What is a Distributed Denial of Service (DDoS) attack?', options: ['A) An attack that locks a user out of their account', 'B) An attack that disrupts a network by overwhelming it with traffic from multiple sources', 'C) An attack that installs malware on a victim’s computer', 'D) An attack that manipulates website traffic to increase revenue'], correctAnswer: 'B', explanation: 'A DDoS attack disrupts a network by flooding it with massive amounts of traffic from multiple sources, causing systems to crash or become unavailable.' },
+            { id: 27, question: 'What was the significance of the 2020 SolarWinds cyberattack?', options: ['A) An attack that stole sensitive data from financial institutions', 'B) An attack that compromised software updates, affecting government and corporate systems', 'C) A DDoS attack on multiple US government websites', 'D) A hack that targeted social media accounts'], correctAnswer: 'B', explanation: 'The 2020 SolarWinds cyberattack involved hackers compromising a software update, which was distributed to thousands of organizations, including U.S. government agencies and large corporations.' },
+            { id: 28, question: 'What is the purpose of a security patch?', options: ['A) To add new features to a software', 'B) To fix vulnerabilities and improve security in software', 'C) To encrypt a system’s data', 'D) To increase the speed of a system'], correctAnswer: 'B', explanation: 'A security patch is released by software vendors to fix known vulnerabilities and improve the overall security of the system, preventing exploitation by attackers.' },
+            { id: 29, question: 'What happened during the 2014 Sony Pictures cyberattack?', options: ['A) A DDoS attack that crashed Sony’s website', 'B) A hack that resulted in the leak of sensitive emails and employee information', 'C) A ransomware attack targeting their entertainment content', 'D) A hack that stole credit card information from customers'], correctAnswer: 'B', explanation: 'In 2014, Sony Pictures was hacked, leading to the leak of sensitive emails and employee data, as well as the release of unreleased movies, allegedly by North Korean hackers.' },
+            { id: 30, question: 'What is the purpose of a VPN (Virtual Private Network)?', options: ['A) To hide a user’s location and encrypt internet traffic', 'B) To recover lost passwords', 'C) To prevent malware infections', 'D) To monitor network traffic for attacks'], correctAnswer: 'A', explanation: 'A VPN encrypts internet traffic and hides a user’s IP address to ensure privacy and security when accessing the internet, particularly on public networks.' },
+            { id: 31, question: 'What is an IP address?', options: ['A) A type of DNS server', 'B) A unique identifier for a device on a network', 'C) A method for encrypting data over the internet', 'D) A protocol used to send data across networks'], correctAnswer: 'B', explanation: 'An IP address is a unique identifier assigned to each device on a network, allowing devices to communicate with each other.' },
+            { id: 32, question: 'What is the difference between IPv4 and IPv6?', options: ['A) IPv4 has 128-bit addresses, while IPv6 has 32-bit addresses', 'B) IPv4 is more secure than IPv6', 'C) IPv6 has larger address space compared to IPv4', 'D) IPv4 is used only for local networks'], correctAnswer: 'C', explanation: 'IPv6 provides a much larger address space (128-bit addresses) compared to IPv4 (32-bit addresses), allowing for more unique IP addresses.' },
+            { id: 33, question: 'What is the purpose of a router?', options: ['A) To route data within a single computer', 'B) To monitor network traffic for suspicious activity', 'C) To connect multiple networks and forward data packets between them', 'D) To encrypt communication on a network'], correctAnswer: 'C', explanation: 'A router connects different networks together and forwards data packets between them, ensuring they reach their intended destination.' },
+            { id: 34, question: 'What is the role of DNS (Domain Name System)?', options: ['A) To assign IP addresses to devices on a network', 'B) To convert domain names into IP addresses', 'C) To encrypt data between servers and clients', 'D) To monitor network performance'], correctAnswer: 'B', explanation: 'DNS translates human-readable domain names (e.g., www.example.com) into IP addresses that computers can use to locate each other on the network.' },
+            { id: 35, question: 'What does the term "subnet" refer to?', options: ['A) A type of network switch', 'B) A way to divide a network into smaller, manageable segments', 'C) A method of encrypting network traffic', 'D) A device used to monitor network performance'], correctAnswer: 'B', explanation: 'A subnet is a smaller segment of a larger network, created to improve management and security within the network.' },
+            { id: 36, question: 'What is the purpose of NAT (Network Address Translation)?', options: ['A) To create new IP addresses for networks', 'B) To encrypt data over the internet', 'C) To translate private IP addresses into public IP addresses for internet access', 'D) To assign IP addresses to devices on a network'], correctAnswer: 'C', explanation: 'NAT is used to translate private IP addresses within a local network into a public IP address for internet access, conserving the number of public IPs needed.' },
+            { id: 37, question: 'What is the purpose of a switch in a network?', options: ['A) To route traffic between different networks', 'B) To forward data packets to specific devices within the same network', 'C) To encrypt data over a network', 'D) To manage IP address assignments in a network'], correctAnswer: 'B', explanation: 'A switch is a network device that forwards data packets to the correct devices within the same local network based on MAC addresses.' },
+            { id: 38, question: 'What is a MAC address?', options: ['A) A type of IP address used on local networks', 'B) A hardware address used to identify a device on a local network', 'C) A method to encrypt data traffic', 'D) A protocol used to transfer data across networks'], correctAnswer: 'B', explanation: 'A MAC address (Media Access Control address) is a unique identifier assigned to network interfaces, used to identify devices on a local network.' },
+            { id: 39, question: 'What is DHCP (Dynamic Host Configuration Protocol)?', options: ['A) A protocol for securely encrypting data', 'B) A protocol for assigning IP addresses to devices on a network', 'C) A protocol for routing data between networks', 'D) A protocol for translating domain names into IP addresses'], correctAnswer: 'B', explanation: 'DHCP automatically assigns IP addresses to devices on a network, simplifying the process of network configuration.' },
+            { id: 40, question: 'What is the purpose of the OSI model?', options: ['A) To define a standard for IP addresses', 'B) To provide a framework for understanding how different network protocols interact', 'C) To ensure encryption across networks', 'D) To monitor network traffic for malicious activity'], correctAnswer: 'B', explanation: 'The OSI (Open Systems Interconnection) model provides a conceptual framework for understanding how network protocols work together in a layered structure, from physical transmission to application.' },
+            {
+                id: 41,
+                question: 'What is the purpose of the "ls" command in Linux?',
+                options: ['A) Lists all running processes', 'B) Displays the contents of a directory', 'C) Deletes a directory', 'D) Creates a new file'],
+                correctAnswer: 'B',
+                explanation: '"ls" is a command used in Linux to display the contents of a directory.'
+            },
+            {
+                id: 42,
+                question: 'What is the purpose of the "cd" command in Linux?',
+                options: ['A) To copy files', 'B) To change the current directory', 'C) To display the current directory', 'D) To delete a file'],
+                correctAnswer: 'B',
+                explanation: '"cd" is used to change the current directory in the file system.'
+            },
+            {
+                id: 43,
+                question: 'What is the purpose of the "cat" command in Linux?',
+                options: ['A) Displays the contents of a file', 'B) Edits a file', 'C) Deletes a file', 'D) Renames a file'],
+                correctAnswer: 'A',
+                explanation: '"cat" is used to display the contents of a file, concatenate files, and redirect output.'
+            },
+            {
+                id: 44,
+                question: 'What is the purpose of the "chmod" command in Linux?',
+                options: ['A) To modify file ownership', 'B) To change file permissions', 'C) To move a file', 'D) To compress a file'],
+                correctAnswer: 'B',
+                explanation: '"chmod" is used to change file or directory permissions in Linux.'
+            },
+            {
+                id: 45,
+                question: 'What is the purpose of the "grep" command in Linux?',
+                options: ['A) Searches for a specific string in files', 'B) Deletes files matching a pattern', 'C) Moves files to another directory', 'D) Displays the current user'],
+                correctAnswer: 'A',
+                explanation: '"grep" searches for a specific string or pattern in files and displays matching lines.'
+            },
+            {
+                id: 46,
+                question: 'What is the purpose of the "ps" command in Linux?',
+                options: ['A) Displays processes currently running', 'B) Lists files in the current directory', 'C) Displays the system uptime', 'D) Starts a new process'],
+                correctAnswer: 'A',
+                explanation: '"ps" is used to display information about active processes running on the system.'
+            },
+            {
+                id: 47,
+                question: 'What is the purpose of the "mkdir" command in Linux?',
+                options: ['A) Creates a new file', 'B) Creates a new directory', 'C) Deletes an existing directory', 'D) Moves a directory'],
+                correctAnswer: 'B',
+                explanation: '"mkdir" is used to create new directories in the file system.'
+            },
+            {
+                id: 48,
+                question: 'What is the purpose of the "top" command in Linux?',
+                options: ['A) Monitors real-time system resource usage', 'B) Displays the contents of a directory', 'C) Compresses files', 'D) Restarts the system'],
+                correctAnswer: 'A',
+                explanation: '"top" displays real-time system resource usage, including CPU, memory, and running processes.'
+            },
+            {
+                id: 49,
+                question: 'What is the purpose of the "ping" command in Linux?',
+                options: ['A) Tests connectivity between devices', 'B) Transfers files securely', 'C) Lists all open network connections', 'D) Displays the IP address of the system'],
+                correctAnswer: 'A',
+                explanation: '"ping" tests connectivity between devices by sending ICMP echo requests and measuring response time.'
+            },
+            {
+                id: 50,
+                question: 'What is the purpose of the "netstat" command in Linux?',
+                options: ['A) Lists network connections and listening ports', 'B) Displays system log files', 'C) Modifies firewall rules', 'D) Encrypts files'],
+                correctAnswer: 'A',
+                explanation: '"netstat" is used to display active network connections, routing tables, and listening ports on a system.'
+            },
+            {
+                id: 51,
+                question: 'What is the purpose of the "SELECT" command in SQL?',
+                options: ['A) To modify data in a table', 'B) To retrieve data from a table', 'C) To delete a table', 'D) To create a table'],
+                correctAnswer: 'B',
+                explanation: '"SELECT" is used to retrieve data from one or more tables in a database.'
+            },
+            {
+                id: 52,
+                question: 'What is the purpose of the "INSERT INTO" command in SQL?',
+                options: ['A) Adds new data to a table', 'B) Deletes data from a table', 'C) Updates data in a table', 'D) Creates a new database'],
+                correctAnswer: 'A',
+                explanation: '"INSERT INTO" is used to add new rows of data to a table.'
+            },
+            {
+                id: 53,
+                question: 'What is the purpose of the "UPDATE" command in SQL?',
+                options: ['A) Deletes rows from a table', 'B) Modifies existing data in a table', 'C) Creates a new table', 'D) Retrieves data from a table'],
+                correctAnswer: 'B',
+                explanation: '"UPDATE" is used to modify existing data in one or more columns of a table.'
+            },
+            {
+                id: 54,
+                question: 'What is the purpose of the "DELETE" command in SQL?',
+                options: ['A) Removes rows from a table', 'B) Drops a table', 'C) Creates a new database', 'D) Modifies data in a table'],
+                correctAnswer: 'A',
+                explanation: '"DELETE" is used to remove specific rows from a table based on a condition.'
+            },
+            {
+                id: 55,
+                question: 'What is the purpose of the "CREATE TABLE" command in SQL?',
+                options: ['A) Deletes a table', 'B) Creates a new table in the database', 'C) Retrieves data from a table', 'D) Modifies a table structure'],
+                correctAnswer: 'B',
+                explanation: '"CREATE TABLE" is used to define a new table and its structure in the database.'
+            },
+            {
+                id: 56,
+                question: 'What is the purpose of the "DROP TABLE" command in SQL?',
+                options: ['A) Deletes all rows from a table', 'B) Deletes a table and its structure', 'C) Modifies the table structure', 'D) Removes specific rows from a table'],
+                correctAnswer: 'B',
+                explanation: '"DROP TABLE" deletes a table entirely, including its structure and data.'
+            },
+            {
+                id: 57,
+                question: 'What is the purpose of the "ALTER TABLE" command in SQL?',
+                options: ['A) Modifies the structure of an existing table', 'B) Deletes a table', 'C) Creates a new table', 'D) Retrieves data from a table'],
+                correctAnswer: 'A',
+                explanation: '"ALTER TABLE" is used to modify the structure of an existing table, such as adding or removing columns.'
+            },
+            {
+                id: 58,
+                question: 'What is the purpose of the "WHERE" clause in SQL?',
+                options: ['A) Specifies the columns to retrieve', 'B) Filters rows based on a condition', 'C) Groups rows with similar values', 'D) Sorts rows in a table'],
+                correctAnswer: 'B',
+                explanation: '"WHERE" is used to filter rows based on a specific condition in SQL queries.'
+            },
+            {
+                id: 59,
+                question: 'What is the purpose of the "GROUP BY" clause in SQL?',
+                options: ['A) Filters rows based on a condition', 'B) Groups rows with similar values', 'C) Sorts rows in a table', 'D) Deletes rows from a table'],
+                correctAnswer: 'B',
+                explanation: '"GROUP BY" groups rows that have the same values in specified columns for aggregation.'
+            },
+            {
+                id: 60,
+                question: 'What is the purpose of the "HAVING" clause in SQL?',
+                options: ['A) Filters groups based on a condition', 'B) Sorts rows in a table', 'C) Specifies columns to retrieve', 'D) Deletes rows from a table'],
+                correctAnswer: 'A',
+                explanation: '"HAVING" is used to filter groups of data after applying the "GROUP BY" clause in SQL.'
+            }
+
+
+        ];
+
+        // Function to randomly select 5 questions
+        function getRandomQuestions() {
+            const randomQuestions = [];
+            while (randomQuestions.length < 5) {
+                const randomIndex = Math.floor(Math.random() * questions.length);
+                if (!randomQuestions.includes(questions[randomIndex])) {
+                    randomQuestions.push(questions[randomIndex]);
+                }
+            }
+            return randomQuestions;
+        }
+
+        // Function to display selected questions
+        function displayQuestions() {
+            selectedQuestions = getRandomQuestions(); // Store the 5 questions globally
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = '';  // Clear previous questions
+
+            selectedQuestions.forEach((question) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `
+                <div>${question.question}</div>
+                <ul id="option-question${question.id}" class="options">
+                    ${question.options.map((option, index) => `
+                        <li id="option-question${question.id}-${String.fromCharCode(65 + index)}" onclick="selectOption(${question.id}, '${String.fromCharCode(65 + index)}')">${option}</li>
+                    `).join('')}
+                </ul>
+            `;
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        // Start Timer
+        function startTimer() {
+            interval = setInterval(function () {
+                if (timer <= 0) {
+                    clearInterval(interval);
+                    submitQuiz();
+                } else {
+                    timer--;
+                    document.getElementById('timer').innerText = `Time Remaining: ${formatTime(timer)}`;
+                }
+            }, 1000);
+        }
+
+        function formatTime(seconds) {
+            let minutes = Math.floor(seconds / 60);
+            let remainingSeconds = seconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        }
+
+        // Select an option for a question
+        function selectOption(questionId, option) {
+            selectedAnswers[questionId] = option;
+            const questionOptions = document.querySelectorAll(`#option-question${questionId} li`);
+            questionOptions.forEach((li) => li.classList.remove('selected')); // Remove 'selected' class from all options
+            document.getElementById(`option-question${questionId}-${option}`).classList.add('selected');
+        }
+
+        // Submit the quiz
+        function submitQuiz() {
+            clearInterval(interval);
+
+            const resultList = document.getElementById('result-list');
+            resultList.innerHTML = ''; // Clear previous results
+
+            selectedQuestions.forEach((question) => {
+                const answer = selectedAnswers[question.id];
+                const correct = answer === question.correctAnswer;
+                const resultItem = document.createElement('li');
+                resultItem.innerHTML = `
+                <div><strong>${question.question}</strong></div>
+                <div>Your Answer: ${answer}</div>
+                <div>Correct Answer: ${question.correctAnswer}</div>
+                <div style="color: ${correct ? 'green' : 'red'};">${correct ? 'Correct' : 'Incorrect'}</div>
+                <div><em>${question.explanation}</em></div>
+            `;
+                resultList.appendChild(resultItem);
+            });
+
+            // Show the popup
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        // Close popup
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            resetGame();
+        }
+
+        // Reset game
+        function resetGame() {
+            timer = 120;
+            selectedAnswers = {};
+            displayQuestions();
+            startTimer();
+            document.getElementById('timer').innerText = 'Time Remaining: 02:00';
+            document.getElementById('popup').style.display = 'none';
+            document.querySelector('.play-again-btn').style.display = 'none';
+        }
+
+        // Initialize the quiz
+        window.onload = function () {
+            displayQuestions();
+            startTimer();
+        };
+    </script>
+</body>
+
+
+
+</html>

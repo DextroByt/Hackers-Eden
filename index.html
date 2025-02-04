@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackers Eden</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: red;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            border: 5px solid red;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Center content vertically */
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s;
+            /* Smooth transition for color changes */
+        }
+
+        .header {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: red;
+            transition: all 0.3s;
+            /* Smooth transition for color changes */
+        }
+
+        .warning {
+            font-size: 1.2em;
+            animation: warningEffect 3s infinite;
+            margin-bottom: 30px;
+            /* Add some space between warning text and button */
+        }
+
+        .warning p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .authorize-btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: red;
+            background-color: black;
+            border: 2px solid red;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .authorize-btn:active {
+            color: black;
+            border-color: green;
+        }
+
+        @keyframes warningEffect {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .header {
+                font-size: 2.5em;
+            }
+
+            .warning {
+                font-size: 1.5em;
+            }
+
+            .authorize-btn {
+                font-size: 1.3em;
+                padding: 18px 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                font-size: 2em;
+            }
+
+            .warning {
+                font-size: 1.2em;
+            }
+
+            .authorize-btn {
+                font-size: 1.2em;
+                padding: 10px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                font-size: 1.2em;
+            }
+
+            .warning {
+                font-size: 0.9em;
+            }
+
+            .authorize-btn {
+                font-size: 0.9em;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">Hackers Eden</div>
+        <div class="warning">
+            <p>Welcome to Hackers Eden, a gateway to exclusive and invaluable insights. This platform houses critical
+                and sensitive information accessible only to verified users.</p>
+            <p>Your activities on this system are continuously monitored and securely logged to ensure transparency and
+                safeguard the data within. Unauthorized access attempts will be met with strict actions as per
+                cybersecurity protocols.</p>
+            <p>By proceeding, you acknowledge the significance of maintaining the confidentiality and integrity of this
+                resource. Are you ready to explore responsibly?</p>
+            <p>Do you still wish to proceed?</p>
+        </div>
+        <div class="button-container">
+            <button class="authorize-btn" onclick="authorizeAccess()">Authorize Access</button>
+        </div>
+    </div>
+
+    <script>
+        function authorizeAccess() {
+            const btn = document.querySelector('.authorize-btn');
+            const container = document.querySelector('.container');
+            const header = document.querySelector('.header');
+            const warningText = document.querySelectorAll('.warning p'); // Select all warning paragraphs
+
+            // Change button text and style
+            btn.innerText = 'Access Granted';
+            btn.style.color = 'green';
+            btn.style.border = '2px solid green';
+
+            // Change container border and header color to green
+            container.style.borderColor = 'green';
+            header.style.color = 'green';
+
+            // Change warning text color to green
+            warningText.forEach(p => {
+                p.style.color = 'green';
+            });
+
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>
