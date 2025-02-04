@@ -308,3 +308,15 @@ Home Page Media Queries Added to Game File
         font-size: 10px;
     }
 }
+
+/* ---------------------------
+Media Query for Result Popup on Screens Less Than 720px
+--------------------------- */
+@media (max-width: 720px) {
+    .popup {
+        width: 90%;           /* Use a percentage width for better responsiveness */
+        max-width: 320px;     /* Limit the maximum width */
+        padding: 15px;        /* Adjust padding if necessary */
+        font-size: 14px;      /* Slightly smaller font size for readability */
+    }
+}
