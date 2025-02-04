@@ -246,6 +246,96 @@
             color: red;
             font-size: 14px;
         }
+
+        @media (max-width: 1080px) {
+      .quiz-container {
+        margin: 20px 10px;
+      }
+      .header{
+        font-size: 28px;
+      }
+      /* You can add additional styles for 1080px screens here */
+    }
+
+    /* For screens up to 480px (Mobile Mode) */
+    @media (max-width: 480px) {
+      /* Reposition the arrow icon so it no longer overlaps with the header */
+      .arrow-icon {
+        position: relative;
+        top: 0;
+        left: 0;
+        display: block;
+        margin: 10px auto;
+      }
+      /* Increase top padding of header to create space if needed */
+      .header {
+        padding-top: 60px;
+        text-align: center;
+      }
+      .quiz-container {
+        margin: 10px 5px;
+      }
+      .timer {
+        font-size: 20px;
+      }
+      .submit-btn,
+      .play-again-btn {
+        font-size: 18px;
+        padding: 10px;
+      }
+    }
+
+    /* ---------------------------
+       Home Page Media Queries Added to Game File
+       --------------------------- */
+
+    /* Media Query for 1080px screens */
+    @media (max-width: 1080px) {
+      .header {
+        font-size: 28px;
+      }
+
+      .arrow-icon {
+        top: 15px;
+        left: 15px;
+      }
+
+      .footer {
+        font-size: 14px;
+      }
+    }
+
+    /* Media Query for 768px screens */
+    @media (max-width: 768px) {
+      .header {
+        font-size: 24px;
+      }
+
+      .arrow-icon {
+        top: 10px;
+        left: 10px;
+      }
+
+      .footer {
+        font-size: 12px;
+      }
+    }
+
+    /* Media Query for 480px screens */
+    @media (max-width: 480px) {
+      .header {
+        font-size: 20px;
+      }
+
+      .arrow-icon {
+        top: 5px;
+        left: 5px;
+      }
+
+      .footer {
+        font-size: 10px;
+      }
+    }
     </style>
 </head>
 
