@@ -303,8 +303,12 @@ Home Page Media Queries Added to Game File
         padding: 8px;
     }
 
+    .question{
+        fons-size:20px;
+    }
+
     .options li {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .footer {
