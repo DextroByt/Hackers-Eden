@@ -37,9 +37,9 @@ body {
 
 .hamburger {
     position: absolute;
-    /* Change to fixed */
-    top: 20px;
-    left: 20px;
+    top: 50%;
+    left: 20px; /* Adjust left as needed */
+    transform: translateY(-50%);
     cursor: pointer;
     z-index: 100;
 }
@@ -202,7 +202,6 @@ body {
     }
 
     .hamburger {
-        top: 15px;
         left: 15px;
     }
 
@@ -236,7 +235,6 @@ body {
     }
 
     .hamburger {
-        top: 10px;
         left: 10px;
     }
 
@@ -270,7 +268,6 @@ body {
     }
 
     .hamburger {
-        top: 5px;
         left: 5px;
     }
 
