@@ -1,0 +1,310 @@
+body {
+    background-color: black;
+    color: green;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: black;
+    padding: 20px;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    color: green;
+    border-bottom: 2px solid green;
+    box-shadow: 0 5px 15px green;
+    position: relative;
+}
+
+.header:hover {
+    color: #ff3333;
+    /* A softer red */
+    border-bottom-color: #ff3333;
+    box-shadow: 0 5px 15px rgba(255, 51, 51, 0.4);
+    position: relative;
+}
+
+.arrow-icon {
+    position: absolute;
+    top: 50%;
+    left: 20px; /* Adjust left as needed */
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 100;
+}
+
+.quiz-container {
+    margin: 30px;
+    border: 2px dashed green;
+    margin: 20px 5px 10px 5px;
+    padding: 10px;
+}
+
+.question {
+    font-size: 24px;
+    /* Increased size for questions */
+    font-weight: bold;
+    /* Make the question bold */
+    color: yellowgreen;
+    /* Different color for questions */
+    margin: 20px 0;
+}
+
+.options {
+    list-style-type: none;
+    padding: 0;
+}
+
+.options li {
+    font-size: 20px;
+    /* Slightly smaller font size for options */
+    font-weight: normal;
+    /* Regular font weight for options */
+    color: lightgreen;
+    /* Different color for options */
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid green;
+    /* Add a border around each option */
+    border-radius: 5px;
+    /* Rounded corners for options */
+    background-color: black;
+    /* Background color to contrast with text */
+    transition: all 0.3s ease;
+    /* Smooth transition effect */
+    cursor: pointer;
+}
+
+.options li:hover {
+    background-color: black;
+    /* Highlight background on hover */
+    color: red;
+    /* Change text color on hover */
+    transform: scale(1.05);
+    /* Slight zoom effect on hover */
+    border-color: red;
+}
+
+.options li.selected {
+    font-weight: bold;
+    /* Make selected option bold */
+    color: red;
+    /* Change text color for selected option */
+    background-color: black;
+    /* Highlight background for selected option */
+    border-color: red;
+    /* Change border color for selected option */
+}
+
+
+.options li.selected.changed {
+    color: green;
+    /* Add a 'changed' class for options that will be colored green */
+}
+
+.timer {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.submit-btn,
+.play-again-btn {
+    display: block;
+    margin: 30px auto;
+    padding: 15px;
+    background-color: black;
+    color: red;
+    font-size: 20px;
+    border: 2px solid red;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.popup .close {
+    cursor: pointer;
+    text-align: right;
+    font-size: 30px;
+    color: red;
+    /* Red color for the close button */
+    background: none;
+    /* Remove any background */
+    border: none;
+    /* Remove border */
+    padding: 0;
+    margin: 0;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    color: green;
+    padding: 20px;
+    z-index: 1000;
+    width: 400px;
+    /* Width remains as is */
+    max-height: 80vh;
+    /* Limits the height to 80% of the viewport height */
+    overflow-y: auto;
+    /* Makes content scrollable if it exceeds max-height */
+    border: 2px solid green;
+    /* Adds a border to match the theme */
+    border-radius: 10px;
+    /* Rounded corners */
+}
+
+/* Custom scrollbar styles */
+.popup::-webkit-scrollbar {
+    width: 8px;
+}
+
+.popup::-webkit-scrollbar-track {
+    background: black;
+}
+
+.popup::-webkit-scrollbar-thumb {
+    background-color: green;
+    border-radius: 10px;
+    border: 2px solid green;
+}
+
+.popup ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.popup ul li {
+    margin: 10px 0;
+}
+
+.popup ul li.correct {
+    color: green;
+}
+
+.popup ul li.wrong {
+    color: red;
+}
+
+.popup ul li.explanation {
+    font-style: italic;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.popup ul li:not(:last-child) {
+    border-bottom: 1px solid green;
+    /* Adds a line after each question */
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+
+/* Footer Styling */
+.footer {
+    border-top: 2px solid green;
+    box-shadow: 0 -5px 15px rgba(0, 255, 0, 0.3);
+    background-color: black;
+    color: green;
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.footer a {
+    color: #00FF00;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #FF0000;
+}
+
+/* Developed By Section */
+.developed-by {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: red;
+    font-size: 14px;
+}
+
+/* ---------------------------
+Home Page Media Queries Added to Game File
+--------------------------- */
+
+/* Media Query for 1080px screens */
+@media (max-width: 1080px) {
+    .header {
+        font-size: 28px;
+    }
+
+    .arrow-icon {
+        left: 15px;
+    }
+
+    .quiz-container {
+        padding: 15px;
+    }
+
+    .options li {
+        font-size: 16px;
+    }
+
+    .footer {
+        font-size: 14px;
+    }
+}
+
+/* Media Query for 768px screens */
+@media (max-width: 768px) {
+    .header {
+        font-size: 24px;
+    }
+
+    .arrow-icon {
+        left: 10px;
+    }
+
+    .quiz-container {
+        padding: 10px;
+    }
+
+    .options li {
+        font-size: 14px;
+    }
+
+    .footer {
+        font-size: 12px;
+    }
+}
+
+/* Media Query for 480px screens */
+@media (max-width: 480px) {
+    .header {
+        font-size: 20px;
+    }
+
+    .arrow-icon {
+        left: 5px;
+    }
+
+    .quiz-container {
+        padding: 8px;
+    }
+
+    .options li {
+        font-size: 12px;
+    }
+
+    .footer {
+        font-size: 10px;
+    }
+}
